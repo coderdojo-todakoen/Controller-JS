@@ -16,7 +16,7 @@ const elements = document.getElementsByClassName("action");
 for (let i = 0; i != elements.length; ++i) {
   const element = elements.item(i);
   const id = element.id;
-  element.addEventListener('mousedown', () => {
+  element.addEventListener('touchstart', () => {
     // ボタンが押された場合の処理をおこないます
     // 押されたボタンに対応する送信文字を取得します
     let str = sendString(id);
@@ -27,7 +27,7 @@ for (let i = 0; i != elements.length; ++i) {
     // 押されたボタンに対応する文字を送信します
     plugin.send('+' + str + '\n');
   });
-  element.addEventListener('mouseup', () => {
+  element.addEventListener('touchend', () => {
     // ボタンが離された場合の処理をおこないます
     // 離されたボタンに対応する送信文字を取得します
     let str = sendString(id);
