@@ -71,6 +71,10 @@ body {
   background: rgb(92, 92, 255);
   color: rgb(255, 255, 255); 
 }
+#container > div.active {
+  background: rgb(92, 92, 255);
+  color: rgb(255, 255, 255); 
+}
 
 #connect {
   position: absolute;
