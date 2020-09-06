@@ -29,6 +29,11 @@ for (let i = 0; i != elements.length; ++i) {
     // ボタンが押されたので、'+'文字と
     // 押されたボタンに対応する文字を送信します
     plugin.send('+' + str + '\n');
+    // e.preventDefault()を追加したら
+    // タッチ操作では、:active擬似クラスが追加
+    // されなくなったため
+    // 押された要素にactiveクラスを追加します
+    element.classList.add('active');
   });
   element.addEventListener('touchend', (e) => {
     // タッチイベントとマウスイベントの両方が発生する場合
@@ -43,6 +48,11 @@ for (let i = 0; i != elements.length; ++i) {
     // ボタンが離されたので、'-'文字と
     // 離されたボタンに対応する文字を送信します
     plugin.send('-' + str + '\n');
+    // e.preventDefault()を追加したら
+    // タッチ操作では、:active擬似クラスが削除
+    // されなくなったため
+    // 押された要素のactiveクラスを削除します
+    element.classList.remove('active');
   });
   element.addEventListener('mousedown', (e) => {
     // ボタンが押された場合の処理をおこないます
