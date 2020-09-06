@@ -16,7 +16,10 @@ const elements = document.getElementsByClassName("action");
 for (let i = 0; i != elements.length; ++i) {
   const element = elements.item(i);
   const id = element.id;
-  element.addEventListener('touchstart', () => {
+  element.addEventListener('touchstart', (e) => {
+    // タッチイベントとマウスイベントの両方が発生する場合
+    // マウスイベントが発生しないようにします
+    e.preventDefault();
     // ボタンが押された場合の処理をおこないます
     // 押されたボタンに対応する送信文字を取得します
     let str = sendString(id);
@@ -27,7 +30,32 @@ for (let i = 0; i != elements.length; ++i) {
     // 押されたボタンに対応する文字を送信します
     plugin.send('+' + str + '\n');
   });
-  element.addEventListener('touchend', () => {
+  element.addEventListener('touchend', (e) => {
+    // タッチイベントとマウスイベントの両方が発生する場合
+    // マウスイベントが発生しないようにします
+    e.preventDefault();
+    // ボタンが離された場合の処理をおこないます
+    // 離されたボタンに対応する送信文字を取得します
+    let str = sendString(id);
+    if (str == null) {
+      return;
+    }
+    // ボタンが離されたので、'-'文字と
+    // 離されたボタンに対応する文字を送信します
+    plugin.send('-' + str + '\n');
+  });
+  element.addEventListener('mousedown', (e) => {
+    // ボタンが押された場合の処理をおこないます
+    // 押されたボタンに対応する送信文字を取得します
+    let str = sendString(id);
+    if (str == null) {
+      return;
+    }
+    // ボタンが押されたので、'+'文字と
+    // 押されたボタンに対応する文字を送信します
+    plugin.send('+' + str + '\n');
+  });
+  element.addEventListener('mouseup', (e) => {
     // ボタンが離された場合の処理をおこないます
     // 離されたボタンに対応する送信文字を取得します
     let str = sendString(id);
@@ -39,6 +67,12 @@ for (let i = 0; i != elements.length; ++i) {
     plugin.send('-' + str + '\n');
   });
 }
+
+document.addEventListener('contextmenu', (e) => {
+  // 操作時に混乱するため、コンテキストメニューが
+  // 表示されないようにします
+  e.preventDefault();
+});
 
 function sendString(id: String) {
   // ボタンのid文字列から、対応する送信文字を決定します
